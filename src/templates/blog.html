@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %} {%load static%} {%block content%}
+
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+            <div class="container">
+                <div class="row">
+                    <!-- post -->
+                    {% for i in posts_list%}
+                    <div class="post col-xl-6">
+                        <div class="post-thumbnail">
+                            <a href="{% url 'post' i.id %}"><img src="{{i.thumbnail.url}}" alt="..." class="img-fluid"></a>
+                        </div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="date meta-last">{{i.timestamp|date:"SHORT_DATE_FORMAT"}}</div>
+                                <div class="category">
+                                    {% for category in i.categories.all%}
+                                    <a href="#"><small>{{category}}</small></a> {% endfor %}
+                                </div>
+                            </div>
+                            <a href="{% url 'post' i.id %}">
+                                <h3 class="h4">{{i.title|title }}</h3>
+                            </a>
+                            <p class="text-muted">{{i.overview|truncatewords:15}}</p>
+                            <footer class="post-footer d-flex align-items-center">
+                                <a href="{% url 'post' i.id %}" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar"><img src="{{i.author.profile_picture.url}}" alt="..." class="img-fluid"></div>
+                                    <div class="title"><span>{{i.author}}</span></div>
+                                </a>
+                                <div class="date"><i class="icon-clock"></i> {{i.timestamp|timesince}}</div>
+                                <div class="comments meta-last"><i class="icon-comment"></i>{{i.comment_count}}</div>
+                            </footer>
+                        </div>
+                    </div>{% endfor %}
+
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination pagination-template d-flex justify-content-center">
+
+                        {% if posts_list.has_previous %}
+                        <li class="page-item">
+                            <a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link"> <i class="fa fa-angle-left"></i></a>
+                        </li>
+                        <li class="page-item"><a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link">{{posts_list.previous_page_number}}</a></li>
+                        {% endif %}
+
+                        <li class="page-item"><a href="#" class="page-link active">{{posts_list.number}}</a></li>
+
+
+
+                        {% if posts_list.has_next%}
+                        <li class="page-item"><a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link">{{posts_list.next_page_number}}</a></li>
+                        <li class="page-item">
+                            <a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link"> <i class="fa fa-angle-right"></i></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </main>
+        {% include 'base/sidebar.html' with most_recent_post=most_recent_post category_count=category_count%}
+
+    </div>
+</div>
+{% endblock %}
