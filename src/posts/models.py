@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from membership.models import *
+# from ckeditor.fields import RichTextField   <---- este no se necesita con el uploader
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 User = get_user_model()
 
@@ -17,6 +19,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     overview = models.TextField()
+    content = RichTextUploadingField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     comment_count = models.IntegerField(default = 0)
     view_count = models.IntegerField(default = 0)

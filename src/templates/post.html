@@ -5,6 +5,12 @@
         <main class="post blog-post col-lg-8">
             <div class="container">
                 <div class="post-single">
+                {%if request.user.author %}
+                <a href="{% url 'edit_post' post.id%}" class="btn btn-info">Update</a>
+                <form method="POST" action="{% url 'delete_post' post.id%}"> {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-danger pull-right">
+                </form>
+                {%endif%}
                     <div class="post-thumbnail"><img src="{{post.thumbnail.url}}" alt="..." class="img-fluid"></div>
                     <div class="post-details">
                         <div class="post-meta d-flex justify-content-between">
@@ -28,7 +34,7 @@
                             </div>
                         </div>
                         <div class="post-body">
-                            {% comment %} AQUI BA EL CONETENIDO DEL RICH TEXT EDITOR {% endcomment %}
+                            {{post.content|safe}}
                         </div>
 
 

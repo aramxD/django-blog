@@ -6,7 +6,8 @@ from marketing.models import Signup # Este es para capturar emails
 from .utils import *
 from membership.models import *
 from .forms import *
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 # Funcion para contar categorias
@@ -31,7 +32,8 @@ def search(request):
 def home(request):
     featured = Post.objects.filter(featured=True)
     latest = Post.objects.order_by('-timestamp')[0:3]
-
+    user = request.user.author
+    print(user)
     if request.method == 'POST':
         email = request.POST['email']
         new_signup = Signup()
@@ -104,3 +106,51 @@ def post(request, post_id):
         'form':form,
     }
     return render(request, 'post.html', context)
+
+
+
+def new_post(request):
+    if request.method == 'POST':
+        user = request.user.author
+        new_post = PostForm(request.POST, request.FILES)
+        if new_post.is_valid():
+            post = new_post.save(commit=False)
+            post.author = user
+            post.save()
+            return redirect('home')
+    else:
+        return render (request, 'post/post_edit.html', {'form':PostForm()})
+
+
+@login_required
+@staff_member_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    form = PostForm(instance= post)
+    if request.method == 'POST':
+        try:
+            form = PostForm(request.POST, request.FILES, instance=post)
+            form.save()
+            return redirect("post", post_id)
+        except ValueError:
+            context={
+                'form':form,
+                'error' : 'Reviza la informacion, algo esta mal...',
+                }
+            return render(request, 'post/post_edit.html', context)    
+
+    context={
+        'form':form,
+        }
+    return render(request, 'post/post_edit.html', context)
+
+
+@login_required
+@staff_member_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect ('home')
+
+

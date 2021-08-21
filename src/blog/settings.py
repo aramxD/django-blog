@@ -46,10 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    #modelos internos
     'posts',
     'marketing',
     'membership',
+
+    #Herramientas
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+CKEDITOR_UPLOAD_PATH = 'media/ckeditor'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

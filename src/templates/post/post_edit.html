@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %} {%load static%} {%block content%}
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8">
+            <div class="container">
+            {{error}}
+                <form  method="POST"  enctype="multipart/form-data">{% csrf_token %}
+                {{form.as_p}} 
+                {{form.media}}
+                <input class="btn btn-info" type="submit">
+                </form>
+            </div>
+        </main>
+
+    
+    </div>
+</div>
+{% endblock%}

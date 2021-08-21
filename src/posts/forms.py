@@ -1,3 +1,4 @@
+from django.db.models import fields
 from django.forms import ModelForm, widgets, Textarea
 from .models import *
 
@@ -16,3 +17,9 @@ class  CommentForm(ModelForm):
                 }
             ),
         }
+
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
