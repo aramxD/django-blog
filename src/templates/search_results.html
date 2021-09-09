@@ -1,17 +1,14 @@
+ {% extends 'base/base.html' %} {%load static%} {%block content%}
+
+<main>
+    <div class="blank-content"></div>
+    <section class="container search-result">
+        {%for result in queryset %}
+        <li>
+            <a href="{%url 'post' result.id %}">   {{result.title}} </a>
+        </li>{% endfor %}
+    </section>
 
 
-{% extends 'base/base.html' %} {%load static%} {%block content%}
-
-
-{%for result in queryset %}
-
-
-<li>
-<a href="{%url 'post' result.id %}">   {{result.title}} </a>
-</li>
-{% endfor %}
-
-
-
-
+</main>
 {% endblock %}

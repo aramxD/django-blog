@@ -1,68 +1,120 @@
 {% extends 'base/base.html' %} {%load static%} {%block content%}
 
-<div class="container">
-    <div class="row">
-        <!-- Latest Posts -->
-        <main class="posts-listing col-lg-8">
-            <div class="container">
-                <div class="row">
-                    <!-- post -->
-                    {% for i in posts_list%}
-                    <div class="post col-xl-6">
-                        <div class="post-thumbnail">
-                            <a href="{% url 'post' i.id %}"><img src="{{i.thumbnail.url}}" alt="..." class="img-fluid"></a>
-                        </div>
-                        <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="date meta-last">{{i.timestamp|date:"SHORT_DATE_FORMAT"}}</div>
-                                <div class="category">
-                                    {% for category in i.categories.all%}
-                                    <a href="#"><small>{{category}}</small></a> {% endfor %}
-                                </div>
-                            </div>
-                            <a href="{% url 'post' i.id %}">
-                                <h3 class="h4">{{i.title|title }}</h3>
-                            </a>
-                            <p class="text-muted">{{i.overview|truncatewords:15}}</p>
-                            <footer class="post-footer d-flex align-items-center">
-                                <a href="{% url 'post' i.id %}" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="{{i.author.profile_picture.url}}" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>{{i.author}}</span></div>
-                                </a>
-                                <div class="date"><i class="icon-clock"></i> {{i.timestamp|timesince}}</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>{{i.comment_count}}</div>
-                            </footer>
-                        </div>
-                    </div>{% endfor %}
+<main>
+    <section class="container listado-post ">
+        <div class="blank-content"></div>
 
+        <h1>Publicaciones</h1>
+        <!-- POST -->
+        {%for i in posts_list%}
+        <div class="blog-post">
+            <a href="{%url 'post' i.id%}">
+                <div class="post" id="post">
+                    <div class="post-img">
+                        <img src="{{i.thumbnail.url}}" alt="">
+                    </div>
+                    <div class="post-categorias">
+                        {% for category in i.categories.all %}
+                        <b><a href="#">- {{category}} -</a> </b>{%endfor%}
+                    </div>
+
+                    <div class="post-texto">
+                        <h2>{{i.title|truncatechars:40}}</h2>
+                        <p> {{i.overview|truncatechars:220}} </p>
+                    </div>
+                    <div class="post-icons">
+                        <i class='bx bx-user-circle'></i> {{i.author}} |
+                        <i class='bx bx-time'></i> {{i.timestamp|timesince}} |
+                        <i class='bx bxs-comment-detail'></i> {{i.comment_count}} |
+                        <i class='bx bx-show'></i> {{i.view_count}}
+                    </div>
                 </div>
-                <!-- Pagination -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-template d-flex justify-content-center">
+            </a>
+        </div>
+        {%endfor%}
 
-                        {% if posts_list.has_previous %}
-                        <li class="page-item">
-                            <a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link"> <i class="fa fa-angle-left"></i></a>
-                        </li>
-                        <li class="page-item"><a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link">{{posts_list.previous_page_number}}</a></li>
-                        {% endif %}
+    </section>
 
-                        <li class="page-item"><a href="#" class="page-link active">{{posts_list.number}}</a></li>
+    <section class="container ">
+        <!-- Pagination -->
+        <div class="">
+            <ul class="pagination">
+                {% if posts_list.has_previous %}
+
+                <a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link">
+                    <li class="page-item"><i class='bx bx-chevron-left'></i></li>
+                </a>
+                <a href="?{{page_request_var}}={{posts_list.previous_page_number}}" class="page-link">
+                    <li class="page-item">{{posts_list.previous_page_number}}</li>
+                </a>
+                {% endif %}
+                <a href=" " class="page-link">
+                    <li class="page-item">{{posts_list.number}}</li>
+                </a>
+                {% if posts_list.has_next%}
+                <a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link">
+                    <li class="page-item">{{posts_list.next_page_number}}</li>
+                </a>
+
+                <a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link">
+                    <li class="page-item"><i class='bx bx-chevron-right'></i></li>
+                </a>
+                {% endif %}
 
 
 
-                        {% if posts_list.has_next%}
-                        <li class="page-item"><a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link">{{posts_list.next_page_number}}</a></li>
-                        <li class="page-item">
-                            <a href="?{{page_request_var}}={{posts_list.next_page_number}}" class="page-link"> <i class="fa fa-angle-right"></i></a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-        </main>
-        {% include 'base/sidebar.html' with most_recent_post=most_recent_post category_count=category_count%}
+            </ul>
+        </div>
+    </section>
+</main>
 
+<aside class="container">
+
+    <div class="aside-section ">
+        <h2>Ultimas publicaciones</h2>
+        <div class="recent-post">
+            {% for i in most_recent_post %}
+            <a href="{% url 'post' i.id %}">
+                <div class="ultimos-post">
+                    <img src="{{i.thumbnail.url}}" alt="">
+                    <div class="ultimos-post-text">
+                        <h2>{{i.title|title|truncatechars:30}}</h2>
+                        <p>
+                            <i class='bx bxs-comment-detail'></i> {{i.comment_count}} |
+                            <i class='bx bx-show'></i> {{i.view_count}}
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+
+        </div>
     </div>
-</div>
-{% endblock %}
+    <div class="aside-section search">
+        <div class="post-search ">
+            <h2>Te ayudo a buscar un tema 😬</h2>
+            <form action="{% url 'search' %}" class="search-form">
+                <div class="form-group">
+                    <input type="text" name="q" placeholder="Que buscas ?">
+                    <button type="submit" class="submit"><i class='bx bx-search-alt' ></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="aside-section categorias-post">
+            <h2>Categorias</h2>
+            <table id="categories">
+                <tr class="item ">
+                    <td><a href="#">Revit<span>( 3 )</span></a></td>
+                </tr>
+                <tr class="item ">
+                    <td><a href="#">Revit <span>( 3 )</span></a></td>
+                </tr>
+                <tr class="item ">
+                    <td><a href="#">Revit<span>( 3 )</span></a></td>
+                </tr>
+            </table>
+        </div> -->
+</aside>
+
+{%endblock %}

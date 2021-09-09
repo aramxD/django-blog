@@ -1,0 +1,575 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-size: 30px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.blank-content {
+    min-height: 120px;
+    width: 100%;
+}
+
+
+/* CONTAINER FLEX (ELEMENTOS HORIZONTALES) */
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: space-evenly;
+}
+
+
+/* CONTAINER FLEX (ELEMENTOS VERTICALES) */
+
+.container-vertical {
+    align-items: center;
+    margin: auto;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    width: 90%;
+    max-width: 1000px;
+}
+
+
+/* MENU DE NAVEGACION */
+
+nav {
+    width: 100%;
+    height: 80px;
+    background: rgb(255, 255, 255);
+    border-bottom: 1px solid transparent;
+    box-shadow: 1px 1px 10px 0 rgb(139, 132, 132, .4);
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    transition: ease-in-out .5s;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+}
+
+nav .logo {
+    height: 80px;
+}
+
+nav .logo img {
+    height: 100%;
+    vertical-align: top;
+}
+
+.enlaces-header {
+    transition: ease-in .5s;
+}
+
+.enlaces-header ul {
+    display: flex;
+    align-items: center
+}
+
+.enlaces-header li {
+    margin: 0 10px;
+}
+
+input[type=submit] {
+    background: none;
+    color: black;
+    font-size: 20px;
+    border: none
+}
+
+
+/* .enlaces-header>input {
+    color: #000000;
+    background-color: none;
+} */
+
+.nav .enlaces-header>a {
+    padding: 0 20px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.boton-menu {
+    display: none;
+    font-size: 40px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    z-index: 100;
+    cursor: pointer;
+    line-height: 80px;
+    transition: color .5s ease-in;
+}
+
+
+/* HERO DE PAGINA */
+
+.hero {
+    width: 100%;
+    height: 100vh;
+    background-image: url("../img/BIMCapacitacion-Hero.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: bottom;
+}
+
+.head {
+    padding: 0 0 50px 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+}
+
+.title {
+    display: block;
+    right: 30px;
+    color: white;
+    background-color: RGBA(0, 0, 0, .60);
+    padding: 40px;
+    border-radius: 30px;
+}
+
+.title h1 {
+    font-size: 40px;
+}
+
+.title p {
+    font-size: 20px;
+}
+
+
+/* CONTENIDO QUESTIONS */
+
+.questions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    text-align: center;
+}
+
+.questions-img {
+    width: 50%;
+    height: 700px;
+    background-image: url("../img/Imagen-2-972x1024-min-768x809-1.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-attachment: fixed;
+    background-position: right;
+    min-height: 500px;
+}
+
+.questions .text {
+    width: 500px;
+    margin: auto;
+}
+
+.questions h2 {
+    padding-bottom: 30px;
+}
+
+
+/* LISTADO CURSOS */
+
+.container-vertical {
+    width: 100%;
+    max-width: 2000px;
+    background-color: rgba(230, 230, 230, 0.658);
+}
+
+.seccion-listado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.listado-cursos {
+    width: 500px;
+}
+
+.listado-cursos h2 {
+    font-size: 30px;
+    margin: 50px 0;
+}
+
+.listado-cursos li {
+    font-size: 20px;
+    margin: 20px 0;
+    list-style: none;
+}
+
+.listado-cursos-img {
+    width: 500px;
+}
+
+.listado-cursos-img img {
+    width: 100%;
+}
+
+
+/* LISTADO DE POST */
+
+.listado-post {
+    width: 100%;
+}
+
+.listado-post>h2 {
+    font-size: 30px;
+    padding: 40px 0;
+}
+
+.tarjeta-contenido {
+    display: flex;
+    justify-content: center;
+    width: 650px;
+    height: 200px;
+    border: solid 1px black;
+    border-radius: 30px;
+    box-shadow: 20px 10px rgba(163, 163, 163, 0.39);
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.tarjeta-contenido:hover {
+    background-color: #00000013;
+    color: white;
+}
+
+.tarjeta-contenido:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.tarjeta-texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tarjeta h2 {
+    font-size: 25px;
+    /* padding: 0; */
+}
+
+.tarjeta img {
+    height: 200px;
+    width: auto;
+}
+
+.tarjeta-categorias {
+    font-weight: 600;
+    font-style: oblique;
+}
+
+.tarjeta-icons {
+    display: block;
+}
+
+
+/* CONTACTO */
+
+.contacto {
+    flex-wrap: nowrap
+}
+
+.contacto-img img {
+    width: 350px;
+}
+
+.contacto-text {
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    margin: auto;
+    justify-content: center
+}
+
+.contacto-text>h2 {
+    font-size: 30px;
+    padding-bottom: 15px;
+}
+
+.contacto-text>p {
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+
+.contacto form {
+    width: 280px;
+}
+
+.contacto-text input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 60%;
+    background: #f1f1f1;
+}
+
+.contacto-text input:focus {
+    border-color: green
+}
+
+.contacto-text input[type=submit] {
+    float: left;
+    width: 32%;
+    padding: 10px;
+    background: #4E66F8;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer;
+}
+
+.contacto-text input[type=submit]:hover {
+    background: #0b7dda;
+}
+
+
+/* FOOTER */
+
+footer img {
+    width: 250px;
+}
+
+.footer {
+    width: 100%;
+    max-width: 2000px;
+    background-color: rgba(230, 230, 230, 0.658);
+    height: 150px;
+}
+
+.footer-section {
+    width: 40%;
+}
+
+footer .redes-sociales {
+    font-size: 40px;
+}
+
+footer .redes-sociales>a {
+    margin: 10px;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: solid 2px black;
+    transition: color .3s ease-in-out;
+}
+
+footer .redes-sociales .facebook:hover {
+    color: white;
+    background-color: #4E66F8;
+    border: solid 2px rgba(0, 0, 0, 0.418);
+}
+
+footer .redes-sociales .instagram:hover {
+    color: white;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border: solid 2px rgba(0, 0, 0, 0.418);
+}
+
+footer .redes-sociales .youtube:hover {
+    color: white;
+    background-color: #FF0000;
+    border: solid 2px rgba(0, 0, 0, 0.418);
+}
+
+@media screen and (max-width:800px) {
+    /* NAV */
+    .enlaces-header {
+        position: fixed;
+        background-image: linear-gradient(to top, #929292 0%, #4E66F8 100%);
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        clip-path: circle(0.4% at 100% 0);
+    }
+    .nav .menudos {
+        clip-path: circle(141.4% at 100% 0);
+    }
+    .nav .enlaces-header a {
+        color: white;
+    }
+    .boton-menu {
+        display: block;
+    }
+    /* HERO */
+    .hero {
+        height: 60vh;
+        background-position-y: -150px;
+    }
+    /* QUESTIONS */
+    .questions {
+        height: 500px;
+    }
+    .questions-img {
+        height: 500px;
+        background-position-y: 10px;
+    }
+    .questions .text {
+        width: 350px;
+        padding: 0 50px;
+    }
+    .questions h2 {
+        font-size: 25px;
+    }
+    /* LISTADO CURSOS */
+    .listado-cursos {
+        width: 450px;
+    }
+    .listado-cursos h2 {
+        font-size: 25px;
+        padding: 20px 0;
+        margin: 0;
+    }
+    /* LISTADO POSTS */
+    .listado-post>h2 {
+        font-size: 25px;
+        padding: 20px 0;
+        margin-top: 20px;
+    }
+    .tarjeta-contenido {
+        height: auto;
+        width: 80vw;
+        flex-direction: column-reverse;
+    }
+    .tarjeta img {
+        height: 180px;
+        width: auto;
+        justify-content: space-between;
+    }
+    .tarjeta h2 {
+        font-size: 25px;
+        padding-bottom: 10px;
+    }
+    .tarjeta p {
+        padding-bottom: 10px;
+    }
+    /* CONTACTO */
+    .contacto {
+        flex-wrap: wrap;
+        padding-bottom: 50px;
+    }
+    /* FOOTER */
+    footer {
+        flex-direction: column-reverse;
+        flex-wrap: nowrap;
+    }
+    .footer-section {
+        width: 80%;
+    }
+    footer img {
+        width: 150px;
+    }
+    footer .contacto>h2 {
+        font-size: 25px;
+        padding-bottom: 10px;
+    }
+    footer .contacto>p {
+        font-size: 16px;
+        padding-bottom: 10px;
+    }
+    @media screen and (max-width: 500px) {
+        /* HERO */
+        .title h1 {
+            font-size: 30px;
+        }
+        /* QUESTIONS */
+        .questions {
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+        .questions-img {
+            width: 80%;
+            height: 50%;
+            min-height: 0;
+        }
+        .questions .text {
+            width: 90%;
+            padding: 0;
+        }
+        .questions h2 {
+            padding: 30px 0;
+        }
+        /* LISTADO DE CURSOS */
+        .seccion-listado {
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+        /* TARJETAS */
+        .tarjeta-img img {
+            width: 90%;
+            height: auto;
+        }
+        .tarjeta-texto h2 {
+            display: none;
+        }
+        .footer {
+            flex-wrap: nowrap
+        }
+        footer .redes-sociales {
+            font-size: 30px;
+        }
+        footer .redes-sociales>a {
+            margin: 10px;
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            border: solid 2px black;
+            transition: color .3s ease-in-out;
+        }
+    }
+}

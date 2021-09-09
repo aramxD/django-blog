@@ -1,0 +1,38 @@
+.edit-form {
+    flex-direction: column;
+}
+
+.edit-form p {
+    margin: 40px 0;
+}
+
+.edit-form p label {
+    width: 100%;
+    display: block;
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.edit-form p input {
+    width: 100%;
+    display: block;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.edit-form input[type=submit] {
+    width: 32%;
+    padding: 10px;
+    background: #4E66F8;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.edit-form input[type=submit]:hover {
+    background: #8cbee7;
+}

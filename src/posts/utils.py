@@ -10,7 +10,7 @@ def get_category_count():
 
 # Listado de ultimos 3 posts
 def recent_post(posts_list):
-    most_recent_post = posts_list.order_by('-timestamp')[0:3]
+    most_recent_post = posts_list.order_by('-timestamp')[0:4]
     return most_recent_post
 
 

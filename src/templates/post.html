@@ -1,106 +1,166 @@
-{% extends 'base/base.html' %} {%load static%} {%block content%}
-<div class="container">
-    <div class="row">
-        <!-- Latest Posts -->
-        <main class="post blog-post col-lg-8">
-            <div class="container">
-                <div class="post-single">
-                {%if request.user.author %}
-                <a href="{% url 'edit_post' post.id%}" class="btn btn-info">Update</a>
-                <form method="POST" action="{% url 'delete_post' post.id%}"> {% csrf_token %}
-                <input type="submit" value="Delete" class="btn btn-danger pull-right">
-                </form>
-                {%endif%}
-                    <div class="post-thumbnail"><img src="{{post.thumbnail.url}}" alt="..." class="img-fluid"></div>
-                    <div class="post-details">
-                        <div class="post-meta d-flex justify-content-between">
-
-                            <div class="category">
-                                {%for cat in post.categories.all %}
-                                <a href="#">{{cat.title}}</a> {%endfor%}
-                            </div>
-
-                        </div>
-                        <h1>{{post.title}}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-                        <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
-                            <a href="#" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="{{post.author.profile_picture.url}}" alt="..." class="img-fluid"></div>
-                                <div class="title"><span>{{post.author}}</span></div>
-                            </a>
-                            <div class="d-flex align-items-center flex-wrap">
-                                <div class="date"><i class="icon-clock"></i> {{post.timestamp|timesince}}</div>
-                                <div class="views"><i class="icon-eye"></i> {{post.view_count}}</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>{{post.comment_count}}</div>
-                            </div>
-                        </div>
-                        <div class="post-body">
-                            {{post.content|safe}}
-                        </div>
+ {% extends 'base/base.html' %} {%load static%} {%block content%}
 
 
 
-                        <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
-                            {%if previous_obj%}
-                            <a href="{%url 'post' previous_obj.id%}" class="prev-post text-left d-flex align-items-center">
-                                <div class="icon prev"><i class="fa fa-angle-left"></i></div>
-                                <div class="text"><strong class="text-primary">Publicacion Anterior </strong>
-                                    <h6>{{previous_obj.title|title}}</h6>
-                                </div>
-                            </a>
-                            {%endif%}
-                            {%if next_obj %}
-                            <a href="{%url 'post' next_obj.id%}" class="next-post text-right d-flex align-items-center justify-content-end">
-                                <div class="text"><strong class="text-primary">Siguiente Publicacion</strong>
-                                    <h6>{{next_obj.title|title}}</h6>
-                                </div>
-                                <div class="icon next"><i class="fa fa-angle-right">   </i></div>
-                            </a>{%endif%}
-                        </div>
-                        <div class="post-comments">
-                            <header>
-                                <h3 class="h6">Post Comments<span class="no-of-comments">({{post.comments.count}})</span></h3>
-                            </header>
-                            {%for comment in post.get_comments %}
-                            <div class="comment">
-                                <div class="comment-header d-flex justify-content-between">
-                                    <div class="user d-flex align-items-center">
-                                        {% if comment.user.member.profile_picture%}
-                                        <div class="image"><img src="{{comment.user.member.profile_picture.url}}" alt="lol" class="img-fluid rounded-circle"></div>
-                                        {% elif comment.user.author.profile_picture%}
-                                        <div class="image"><img src="{{comment.user.author.profile_picture.url}}" alt="lol" class="img-fluid rounded-circle"></div>
-                                        {% else %}
-                                        <div class="image"><img src="{% static 'img/user.svg' %}" alt="..." class="img-fluid rounded-circle"></div>
-                                        {% endif %}
-                                        <div class="title"><strong>{{comment.user.username}}</strong><span class="date">{{comment.timestamp|timesince}}</span></div>
-                                    </div>
-                                </div>
-                                <div class="comment-body">
-                                    <p>{{comment.content}}</p>
-                                </div>
-                            </div>
-                            {%endfor%}
-                        </div>
-                        <div class="add-comment">
-                            <header>
-                                <h3 class="h6">Leave a reply</h3>
-                            </header>
 
-                            {%if user.is_authenticated %}
-                            <form action="" method="POST" class="commenting-form">{% csrf_token %}
-                            {{form}}<br>
-                            <button type="submit" class="btn btn-secondary">Submit Comment</button>
-                                
-                            </form>
-                            {%else%}
-                            <a href="{%url 'loginuser' %}">Inicia sesion para dejar un comentario :D </a>
-                            {%endif%}
-                        </div>
-                    </div>
+
+<div class="blank-content"></div>
+
+<section class="post-detail container">
+    {%if request.user.author %}
+    <div class="btn-admin">
+        <a href="{% url 'edit_post' post.id%}" id="btn-edit-post">Edit</a>
+
+        <form method="POST" action="{% url 'delete_post' post.id%}"> {% csrf_token %}
+            <input type="submit" value="Delete" id="btn-delete-post">
+        </form>
+
+    </div>
+    {%endif%}
+    <div class="post-img">
+        <img src="{{post.thumbnail.url}}" alt="soy el alt">
+        <div class="post-categorias">
+            <p><b>{%for cat in post.categories.all %}
+                            {{cat.title}} 
+                    {%endfor%}</b></p>
+        </div>
+    </div>
+
+    <div class="post-title">
+        <h1>{{post.title}}</h1>
+        <div class="post-icons">
+            <img src="{{post.author.profile_picture.url}}" alt="Post Author Profile Picture">
+            <p> {{post.author}} |
+                <i class='bx bx-time'></i> {{post.timestamp|timesince}} |
+                <i class='bx bxs-comment-detail'></i> {{post.comment_count}} |
+                <i class='bx bx-show'></i> {{post.view_count}}</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="post-content">
+        {{post.content|safe}}
+    </div>
+
+</section>
+
+<section class="after-post container">
+    <div class="other-post">
+        {%if previous_obj%}
+        <a href="{%url 'post' previous_obj.id%}">
+            <div class="other-post-btn">
+                <div class="btn-icon">
+                    <i class='bx bx-left-arrow'></i>
+                </div>
+                <div class="btn-text">
+                    <p>Publicacion Anterior</p>
+                    <h4>{{previous_obj.title|title|truncatechars:40}}</h4>
                 </div>
             </div>
-        </main>
+        </a>
+        {%endif%} {%if next_obj %}
+        <a href="{%url 'post' next_obj.id%}">
+            <div class="other-post-btn">
 
-    {% include 'base/sidebar.html' with most_recent_post=most_recent_post category_count=category_count%}
+                <div class="btn-text">
+                    <p>Siguiente Publicacion</p>
+                    <h4>{{next_obj.title|title|truncatechars:40}}</h4>
+                </div>
+                <div class="btn-icon">
+                    <i class='bx bx-right-arrow'></i>
+                </div>
+            </div>
+        </a>
+        {%endif%}
     </div>
-</div>
-{% endblock%}
+
+
+</section>
+
+<section class="container post-comment">
+    <h2>Post Comments <small>({{post.comments.count}})</small></h2>
+    {%for comment in post.get_comments %}
+    <div class="comment ">
+        <div class="comment-img">
+            {% if comment.user.member.profile_picture%}
+            <img src="{{comment.user.member.profile_picture.url}}" alt=""> {% elif comment.user.author.profile_picture%}
+            <img src="{{comment.user.author.profile_picture.url}}" alt=""> {%else%}
+            <img src="{% static 'img/user.svg' %}" alt=""> {%endif%}
+        </div>
+        <div class="comment-text">
+            <h3>{{comment.user.username}}</h3>
+            <h6 class="comment-tiempo">{{comment.timestamp|timesince}}</h6>
+            <p>{{comment.content}}</p>
+        </div>
+    </div>
+    {%endfor%}
+
+
+    <div class="comment-input">
+        <p>Deja un comentario</p>
+        {%if user.is_authenticated %}
+        <form action="" method="POST" class="commenting-form">{% csrf_token %} {{form}}
+            <br>
+            <input type="submit" class=" " value="Enviar">
+
+        </form>
+        {%else%}
+        <a href="{%url 'loginuser' %}">Inicia sesion para dejar un comentario :D </a> {%endif%}
+
+
+    </div>
+
+</section>
+
+<aside class="container">
+
+    <div class="aside-section ">
+        <h2>Ultimas publicaciones</h2>
+        <div class="recent-post">
+            {% for i in most_recent_post %}
+            <a href="{% url 'post' i.id %}">
+                <div class="ultimos-post">
+                    <img src="{{i.thumbnail.url}}" alt="">
+                    <div class="ultimos-post-text">
+                        <h2>{{i.title|title|truncatechars:30}}</h2>
+                        <p>
+                            <i class='bx bxs-comment-detail'></i> {{i.comment_count}} |
+                            <i class='bx bx-show'></i> {{i.view_count}}
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+
+        </div>
+    </div>
+    <div class="aside-section search">
+        <div class="post-search ">
+            <h2>Te ayudo a buscar un tema 😬</h2>
+            <form action="{% url 'search' %}" class="search-form">
+                <div class="form-group">
+                    <input type="text" name="q" placeholder="Que buscas ?">
+                    <button type="submit" class="submit"><i class='bx bx-search-alt' ></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="aside-section categorias-post">
+            <h2>Categorias</h2>
+            <table id="categories">
+                <tr class="item ">
+                    <td><a href="#">Revit<span>( 3 )</span></a></td>
+                </tr>
+                <tr class="item ">
+                    <td><a href="#">Revit <span>( 3 )</span></a></td>
+                </tr>
+                <tr class="item ">
+                    <td><a href="#">Revit<span>( 3 )</span></a></td>
+                </tr>
+            </table>
+        </div> -->
+</aside>
+
+{%endblock%}

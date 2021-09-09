@@ -1,164 +1,108 @@
 {% extends 'base/base.html' %} {%load static%} {%block content%}
 
-
-
-<!-- Hero Section-->
-<section style="background: url({% static 'img/hero.jpg' %}); background-size: cover; background-position: center center" class="hero">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <h1>Bootstrap 4 Blog - A free template by Bootstrap Temple</h1><a href="#" class="hero-link">Discover More</a>
-            </div>
-        </div><a href=".intro" class="continue link-scroll"><i class="fa fa-long-arrow-down"></i> Scroll Down</a>
-    </div>
-</section>
-<!-- Intro Section-->
-<section class="intro">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <h2 class="h3">Some great intro here</h2>
-                <p class="text-big">Place a nice <strong>introduction</strong> here <strong>to catch reader's attention</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderi.</p>
-            </div>
+<section class="hero-section">
+    <div class="hero head">
+        <div class="title">
+            <h1>
+                BIMCapacitacion
+            </h1>
+            <p>
+                Cursos de Revit para ti :D
+            </p>
         </div>
     </div>
 </section>
-<section class="featured-posts no-padding-top">
-    <div class="container">
-        <!-- Post-->
-        {% for i in posts_list %}
-        <div class="row d-flex align-items-stretch">
-            {% if forloop.counter|divisibleby:2 %}{%else%}
-            <div class="image col-lg-5"><img src="{{i.thumbnail.url}}" alt="..."></div>
-            {% endif %}
-            <div class="text col-lg-7">
-                <div class="text-inner d-flex align-items-center">
-                    <div class="content">
-                        <header class="post-header">
-                            <div class="category">
-                                {% for category in i.categories.all %}
-                                <a href="#">{{category}}</a> {%endfor%}
-                            </div>
-                            <a href="{% url 'post' i.id %}">
-                                <h2 class="h4">{{i.title}}</h2>
-                            </a>
-                        </header>
-                        <p>{{i.overview}}</p>
-                        <footer class="post-footer d-flex align-items-center">
-                            <a href="#" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="{{i.author.profile_picture.url}}" alt="..." class="img-fluid"></div>
-                                <div class="title"><span>{{i.author.user.username}}</span></div>
-                            </a>
-                            <div class="date"><i class="icon-clock"></i>{{i.timestamp|timesince}}</div>
-                            <div class="comments"><i class="icon-comment"></i>{{i.comment_count}} ago</div>
-                        </footer>
+
+<section class="questions ">
+
+    <div class="text">
+        <h2>
+            Que es BIMCapacitacion...?
+        </h2>
+        <p>
+            BIMCapacitacion es una escuela con cursos enfocados en la metodología BIM, nuestra especialidad está en capacitar a tu equipo o empresa en la aplicación de la metodología BIM. Iniciando con un modelo funcional del cual tomes planos, cortes, detalles,
+            cuantificaciones, elabores planos y logres una coordinación con otras disciplinas y proyectistas. <br> Nuestros cursos son desde cero hasta el plotter!
+        </p>
+    </div>
+    <div class="questions-img"></div>
+
+</section>
+
+<section class="container-vertical listado">
+    <div class="seccion-listado">
+        <div class=" listado-cursos" data-aos="fade-up">
+            <h2>Cursos Presenciales Revit</h2>
+            <ul>
+                <li>
+                    <a href="#">✅ Curso Revit Basico </a>
+                </li>
+                <li>
+                    <a href="#">✅ Curso Revit Arquitectonico</a>
+                </li>
+                <li>
+                    <a href="#">✅ Curso Revit Estructural</a>
+                </li>
+                <li>
+                    <a href="#">✅ Curso Revit MEP</a>
+                </li>
+                <li>
+                    <a href="#">✅ Curso Navisworks Basico</a>
+                </li>
+                <li>
+                    <a href="#">✅ Curso Revit + Navisworks</a>
+                </li>
+            </ul>
+        </div>
+        <div class="listado-cursos-img">
+            <img src="{% static 'img/1Logo-BIM-Capacitacion-transparente.png'%}" alt="">
+        </div>
+    </div>
+</section>
+
+<section class="container listado-post ">
+    <h2>Mira nuestros Tutoriales </h2>
+    {% for i in posts_list %}
+    <div class="tarjeta" data-aos="fade-right" data-aos-easing="ease-in-sine">
+        <a href="{% url 'post' i.id %}">
+            <div class="tarjeta-contenido" id="tarjeta">
+                {% if forloop.counter|divisibleby:2 %}{%else%}
+                <div class="tarjeta-img">
+                    <img src="{{i.thumbnail.url}}" alt="">
+                </div>{% endif %}
+                <div class="tarjeta-texto">
+                    <h2>{{i.title|truncatechars:40}}</h2>
+                    <p>
+                        {{i.overview|truncatechars:220}}
+                    </p>
+                    <div class="tarjeta-categorias">
+                        {% for category in i.categories.all %}
+                        <a href="#"> {{category}} </a> {%endfor%}
                     </div>
                 </div>
+                {% if forloop.counter|divisibleby:2 %}
+                <div class="tarjeta-img">
+                    <img src="{{i.thumbnail.url}}" alt="">
+                </div>{% endif %}
             </div>
-            {% if forloop.counter|divisibleby:2 %}
-            <div class="image col-lg-5"><img src="{{i.thumbnail.url}}" alt="..."></div>
-            {% endif %}
-        </div>
-        {% endfor %}
+        </a>
+    </div>
+    {%endfor%}
 
-    </div>
-</section>
-<!-- Divider Section-->
-<section style="background: url({% static 'img/divider-bg.jpg' %}); background-size: cover; background-position: center bottom" class="divider">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2><a href="#" class="hero-link">View More</a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Latest Posts -->
-<section class="latest-posts">
-    <div class="container">
-        <header>
-            <h2>Latest from the blog</h2>
-            <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </header>
-        <div class="row">
-            {% for i in post_latest %}
-            <div class="post col-md-4">
-                <div class="post-thumbnail">
-                    <a href="{% url 'post' i.id %}"><img src="{{i.thumbnail.url}}" alt="..." class="img-fluid"></a>
-                </div>
-                <div class="post-details">
-                    <div class="post-meta d-flex justify-content-between">
-                        <div class="date">{{i.timestamp|date:"SHORT_DATE_FORMAT"}}</div>
-                        <div class="category">
-                            {% for category in i.categories.all%}
-                            <a href="#"><small>{{category}}</small></a> {% endfor %}
-                        </div>
-                    </div>
-                    <a href="{% url 'post' i.id %}">
-                        <h3 class="h4">{{i.title|title}}</h3>
-                    </a>
-                    <p class="text-muted">{{i.overview|truncatewords:15 }}</p>
-                </div>
-            </div>
-            {%endfor%}
-        </div>
-    </div>
-</section>
-<!-- Newsletter Section-->
-<section class="newsletter no-padding-top">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Subscribe to Newsletter</h2>
-                <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="col-md-8">
-                <div class="form-holder">
-                    <form action="." method="POST">{% csrf_token %}
-                        <div class="form-group">
-                            <input type="email" name="email" id="email" placeholder="Type your email address">
-                            <button type="submit" class="submit">Subscribe</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Gallery Section-->
-<section class="gallery no-padding">
-    <div class="row">
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="img/gallery-1.jpg" data-fancybox="gallery" class="image"><img src="{% static 'img/gallery-1.jpg' %}" alt="..." class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="img/gallery-2.jpg" data-fancybox="gallery" class="image"><img src="{% static 'img/gallery-2.jpg' %}" alt="..." class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="img/gallery-3.jpg" data-fancybox="gallery" class="image"><img src="{% static 'img/gallery-3.jpg' %}" alt="..." class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-        <div class="mix col-lg-3 col-md-3 col-sm-6">
-            <div class="item">
-                <a href="img/gallery-4.jpg" data-fancybox="gallery" class="image"><img src="{% static 'img/gallery-4.jpg' %}" alt="..." class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
-                </a>
-            </div>
-        </div>
-    </div>
+
 </section>
 
+<section class="container contacto">
+    <div class="contacto-img">
+        <img src="{% static 'img/undraw_News_re_6uub.png' %}" alt="">
+    </div>
+    <div class="contacto-text ">
+        <h2>Suscribete para recibir Noticias</h2>
+        <p>Si te gusta nuestro contenido dejanos tu correo para enviarte noticias de nuestra pagina </p>
+        <form action="">
+            <input type="text" placeholder="Email">
+            <input class="btn-submit" type="submit" value="Enviar">
+        </form>
+    </div>
+</section>
 
 {%endblock%}

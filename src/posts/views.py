@@ -1,8 +1,10 @@
+from django.core import paginator
 from django.db.models import Count, Q
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect, render, get_object_or_404, reverse
 from .models import *
 from marketing.models import Signup # Este es para capturar emails
+
 from .utils import *
 from membership.models import *
 from .forms import *
@@ -10,6 +12,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
+
+# For IP ADREES
+def get_ip(request):
+    try:
+        x_forward = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forward:
+            ip= x_forward
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+    except:
+        ip = ""
+    return ip
+    
 # Funcion para contar categorias
 
 
@@ -30,10 +45,13 @@ def search(request):
 
 
 def home(request):
+    
+    
+    
     featured = Post.objects.filter(featured=True)
     latest = Post.objects.order_by('-timestamp')[0:3]
-    user = request.user.author
-    print(user)
+    
+    
     if request.method == 'POST':
         email = request.POST['email']
         new_signup = Signup()
@@ -74,15 +92,19 @@ def blog(request):
 
 def post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
+
     #Codigo de post recientes
     posts_list = Post.objects.all()
     most_recent_post = recent_post(posts_list)
 
+
+    
     #Next y Previous POSTS
+    # next_prev_post = posts_list.get(id=post_id)
     next_id = int(post_id)+1
-    next_obj = posts_list.filter(id=next_id).first()
+    next_obj = posts_list.filter(id__gt=post.id).order_by('id').first()
     previous_id = int(post_id)-1
-    previous_obj = posts_list.filter(id=previous_id).first()
+    previous_obj = posts_list.filter(id__lt=post.id).order_by('id').last()
     
 
     #Count Categories
@@ -97,8 +119,14 @@ def post(request, post_id):
             form.instance.post = post
             form.save()
             return redirect(request.META['HTTP_REFERER'])
+
+
+    #Count View 
+     
+    #PostView.objects.get_or_create(user=request.user, post=post, ip=get_ip(request))
     context={
         'post':post,
+         
         'next_obj':next_obj,
         'previous_obj':previous_obj,
         'most_recent_post':most_recent_post,
